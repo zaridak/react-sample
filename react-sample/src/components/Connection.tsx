@@ -15,9 +15,7 @@ export const Connection = ({sentConnectionData}:any)  => {
         // on username change validate if connect should be active
         setConnectDisabled(validateIfConenctShouldBeDisabled(sentConnectionData.userName));
     };
-    const getClientId = (e: ChangeEvent<HTMLInputElement>) => {
-        sentConnectionData.clientId = e.target.value;
-    };
+ 
     const getPort = (e: ChangeEvent<HTMLInputElement>) => {
         sentConnectionData.port = e.target.value;
     };
@@ -48,13 +46,13 @@ export const Connection = ({sentConnectionData}:any)  => {
                             <div className='col-sm-4'>
                                 <InputGroup  >
                                     <InputGroup.Text id="host-id">Host</InputGroup.Text>
-                                    <Form.Control type="text" onChange={getHost} aria-label="default"  />
+                                    <Form.Control type="text" onChange={getHost} aria-label="default" />
                                 </InputGroup>
                             </div>
                             <div className='col-sm-4'>
                                 <InputGroup  >
                                     <InputGroup.Text id="clientid-id">ClientId</InputGroup.Text>
-                                    <Form.Control type="text" onChange={getClientId} aria-label="default"  />
+                                    <Form.Control type="text" disabled={true} placeholder='Auto generated' aria-label="default"  />
                                 </InputGroup>
                             </div>
                         </div>
@@ -62,7 +60,7 @@ export const Connection = ({sentConnectionData}:any)  => {
                             <div className='col-sm-4'>
                                 <InputGroup  >
                                     <InputGroup.Text id="port-id">Port</InputGroup.Text>
-                                    <Form.Control type="text" onChange={getPort} aria-label="default"  />
+                                    <Form.Control type="text" onChange={getPort} aria-label="default" />
                                 </InputGroup>
                             </div>
                         </div>
