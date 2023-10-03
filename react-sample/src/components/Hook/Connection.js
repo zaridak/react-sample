@@ -1,6 +1,6 @@
-import React from 'react'
-import { Card, Button, Form, Input, Row, Col, Select } from 'antd'
-
+import { Form, Input, Row, Col, Select } from 'antd'
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 /**
  * this demo uses EMQX Public MQTT Broker (https://www.emqx.com/en/mqtt/public-mqtt5-broker), here are the details:
  *
@@ -20,18 +20,25 @@ const Connection = ({ connect, disconnect, connectBtn,connectionValues }) => {
   }
 
   return (
-    <Card
-      title="Establishing Connection"
-      actions={[
-        <Button type="primary" onClick={handleConnect}>
-          {connectBtn} And Subscribe to topics
-        </Button>,
-        <Button danger onClick={handleDisconnect}>
-          Disconnect
-        </Button>,
-      ]}
-    >
+    <>
+    <br></br>
+    <Card>
+      <Card.Header>
+        Establishing Connection
+      </Card.Header>
+        <Card.Body>
+          <div className='row'>
+            <div className='col-sm-6'>
+              <Button variant="secondary" onClick={handleConnect}> {connectBtn} And Subscribe to topics </Button>
+            </div>
+            <div className='col-sm-5'>
+              <Button variant="secondary" onClick={handleDisconnect}> Disconnect </Button>
+            </div>
+          </div>
+        </Card.Body>
+
     </Card>
+    </>    
   )
 }
 

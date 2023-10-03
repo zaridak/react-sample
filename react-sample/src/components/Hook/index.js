@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useMemo } from 'react'
+import { createContext, useEffect, useState, useMemo } from 'react'
 import Connection from './Connection'
 import Publisher from './Publisher'
 import Subscriber from './Subscriber'
@@ -154,25 +154,49 @@ const HookMqtt = (connectionDataDetails) => {
   function callSubscribe(){
     if(connectStatus == statusConnected){
       return (
-        <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnsub={isSubed} userName= {connectionDataDetails.connectionDataDetails.userName} />
+        <div>
+          <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnsub={isSubed} userName= {connectionDataDetails.connectionDataDetails.userName} />
+          {callPublisher()}
+        </div>
       )
     }
   }
 
+  // get the pay load from box
+  const getPayloadFromPublisher = (payloadFromPublisher) => {
+    mqttPublish(payloadFromPublisher)
+  }
+
+  function callPublisher(){
+    return (
+      <>      
+      <div className='col-sm-6'>
+        <Receiver payload={payload}></Receiver>
+      </div>
+
+      <div className='col-sm-6'>
+          <Publisher 
+            payloadFromPublisher={payload}
+            publish={mqttPublish} 
+            sendMsgClicked={getPayloadFromPublisher}
+            userConnected={initialConnectionOptions.username}
+            /> 
+      </div>
+      </>   
+    )
+  }
   return (
     <>
-      <Connection
-        connect={mqttConnect}
-        disconnect={mqttDisconnect}
-        connectBtn={connectStatus}
-        connectionValues={initialConnectionOptions}
-      />
+    <div className='col-sm-6'>
+        <Connection
+          connect={mqttConnect}
+          disconnect={mqttDisconnect}
+          connectBtn={connectStatus}
+          connectionValues={initialConnectionOptions}
+        />
+      </div>
       <hr></hr>
-      {/* <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnsub={isSubed} /> */}
       {callSubscribe()}
-      {/* <Publisher publish={mqttPublish} />       */}
-
-      {/* <Receiver payload={payload} /> */}
     </>
   )
 }

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { QosOption } from './index'
 
+
 const Subscriber = ({ sub, unSub, showUnsub,userName }) => {
   // const [form] = Form.useForm()
   const qosOptions = useContext(QosOption)
@@ -8,11 +9,11 @@ const Subscriber = ({ sub, unSub, showUnsub,userName }) => {
   // topic & QoS for MQTT subscribing
   const recordPublic = {
     topic: 'topic/chatserver101/public',
-    qos: 0,
+    qos: 1, // auto unsubscribe after the user disconnects
   }
   const recordPrivate = {
     topic: 'topic/chatserver101/priv/'+userName,
-    qos: 1
+    qos: 1 // auto unsubscribe after the user disconnects
   }
 
   function handleSub(){
