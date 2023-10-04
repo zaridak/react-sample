@@ -17,25 +17,22 @@ const Subscriber = ({ sub, unSub, showUnsub,userName }) => {
     qos: 1, // auto unsubscribe after the user disconnects
   }
 
-  topicsArray.push(recordPublic);
-
-  userNamesUnique.forEach(user =>{
-    if(user){
-      topicsArray.push({
-        topic: 'topic/chatserver101/priv/'+user,
-        qos: 1, // auto unsubscribe after the user disconnects    
-      })
-    }
-  })
-
-  console.log(topicsArray)
-
   const recordPrivate = {
     topic: 'topic/chatserver101/priv/'+userName,
     qos: 1 // auto unsubscribe after the user disconnects
   }
 
   function handleSub(){
+    topicsArray.push(recordPublic);
+
+    userNamesUnique.forEach(user =>{
+      if(user){
+        topicsArray.push({
+          topic: 'topic/chatserver101/priv/'+user,
+          qos: 1, // auto unsubscribe after the user disconnects    
+        })
+      }
+    })
     // if(!showUnsub){
       return (
         topicsArray.map(topic =>sub(topic))

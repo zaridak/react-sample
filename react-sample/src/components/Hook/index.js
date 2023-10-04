@@ -182,7 +182,8 @@ const HookMqtt = (connectionDataDetails) => {
             payloadFromPublisher={payload}
             publish={mqttPublish} 
             sendMsgClicked={getPayloadFromPublisher}
-            userConnected={initialConnectionOptions.username}
+            // userConnected={initialConnectionOptions.username}
+            usernames={userNamesSubscribed}
             /> 
       </div>
       </>   

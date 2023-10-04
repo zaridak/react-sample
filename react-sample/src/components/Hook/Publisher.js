@@ -6,13 +6,13 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useState } from 'react'
 
-const Publisher = ({payloadFromPublisher, publish, sendMsgClicked, userConnected }) => {
+const Publisher = ({payloadFromPublisher, publish, sendMsgClicked,  usernames }) => {
   
   const qosOptions = useContext(QosOption);
-  let recipients = [
-    {value: 'All', name: 'All' },
-    {value: {userConnected}, name: {userConnected}}
-  ];
+  // let recipients = [
+  //   {value: 'All', name: 'All' },
+  //   {value: {userConnected}, name: {userConnected}}
+  // ];
 
   const [userDropDownValue,setUserDropDownValue] = useState('All');
   const [msgToSend, setMsgToSend] = useState('');
@@ -42,9 +42,11 @@ const Publisher = ({payloadFromPublisher, publish, sendMsgClicked, userConnected
 
   // send the payload to parent component
   const createPayLoadToSend = () =>{
+    console.log("create payload to send to user")
+    console.log(userDropDownValue)
     var date = new Date()
     let time = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? '0'  + date.getMinutes()  : date.getMinutes() )
-    let strMsg = time + ' [' + userConnected + '] : ' + msgToSend;
+    let strMsg = time + ' [' + userDropDownValue + '] : ' + msgToSend;
     
     let jsonPayload ={
       "topic": userDropDownValue == 'All' ? 'topic/chatserver101/public' : 'topic/chatserver101/priv/'+userDropDownValue,
@@ -54,6 +56,13 @@ const Publisher = ({payloadFromPublisher, publish, sendMsgClicked, userConnected
     }
     sendMsgClicked(jsonPayload);
   }
+
+  // const dropDownDyn = pro
+  var userNamesFroDropDown = []
+  userNamesFroDropDown.push({label:'All',value:'All'})
+  usernames.forEach(function(usern) {
+    userNamesFroDropDown.push({label:usern,value:usern})
+  })
 
   const PublishForm = (
 
@@ -66,10 +75,12 @@ const Publisher = ({payloadFromPublisher, publish, sendMsgClicked, userConnected
       </div>
 
       <div className='col-sm-6'>
-        {/* todo map the list recipients  */}
         <Form.Select onChange={userSelectionChanged} value ={userDropDownValue}>
-          <option value={'All'}>{'All'}</option>
-          <option value={userConnected}>{userConnected}</option>
+          {
+            userNamesFroDropDown.map( opt =>(
+              <option value={opt.value}>{opt.value}</option>
+            ))
+          }
         </Form.Select>
         <br></br>
         <div className='col-sm-3'>
