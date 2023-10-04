@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, useMemo } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import Connection from './Connection'
 import Publisher from './Publisher'
 import Subscriber from './Subscriber'
@@ -31,6 +31,7 @@ const HookMqtt = (connectionDataDetails) => {
   const [isSubed, setIsSub] = useState(false)
   const [payload, setPayload] = useState({})
   const [connectStatus, setConnectStatus] = useState('Connect')
+  const [userNamesSubscribed, setUserNamesSubscribed] = useState(new Set()) // unique usernames
   
    let initialConnectionOptions = {
     protocol: 'ws',
@@ -56,6 +57,8 @@ const HookMqtt = (connectionDataDetails) => {
       reconnectPeriod: 1000, // ms
       connectTimeout: 30 * 1000, // ms
     }
+    
+    userNamesSubscribed.add(initialConnectionOptions.username)
     setClient(mqtt.connect(url, optionsToConnect))
   }
 
@@ -152,10 +155,10 @@ const HookMqtt = (connectionDataDetails) => {
   }
 
   function callSubscribe(){
-    if(connectStatus == statusConnected){
+    if(connectStatus === statusConnected){
       return (
         <div>
-          <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnsub={isSubed} userName= {connectionDataDetails.connectionDataDetails.userName} />
+          <Subscriber sub={mqttSub} unSub={mqttUnSub} showUnsub={isSubed} userName= {userNamesSubscribed} />
           {callPublisher()}
         </div>
       )
