@@ -43,7 +43,7 @@ const Publisher = ({payloadFromPublisher, publish, sendMsgClicked, userConnected
   // send the payload to parent component
   const createPayLoadToSend = () =>{
     var date = new Date()
-    let time = date.getHours() + ":" + (date.getMinutes() < 10 ? '0'  + date.getMinutes()  : date.getMinutes() )
+    let time = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? '0'  + date.getMinutes()  : date.getMinutes() )
     let strMsg = time + ' [' + userConnected + '] : ' + msgToSend;
     
     let jsonPayload ={

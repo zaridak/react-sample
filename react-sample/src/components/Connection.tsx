@@ -84,10 +84,10 @@ export const Connection = ({sentConnectionData}:any)  => {
                             </InputGroup>
                         </div>
                         <div className='col-sm-4'>
-                            <Button variant="secondary" disabled={connectDisabled} onClick={() => sentConnectionData(sentConnectionData) }> Connect </Button >{' '}
+                            <Button variant="secondary" disabled={connectDisabled} onClick={() => sentConnectionData(sentConnectionData) }> Connect </Button >
                         </div>
                         <div className='col-sm-4'>
-                            <Button variant="secondary" onClick={modifyPressed}> modify </Button >{''}
+                            <Button variant="secondary" onClick={modifyPressed}> modify </Button >
                         </div>
                     </div>
                     <br/><br/>
