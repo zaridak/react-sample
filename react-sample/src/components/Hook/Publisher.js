@@ -42,8 +42,6 @@ const Publisher = ({payloadFromPublisher, publish, sendMsgClicked,  usernames })
 
   // send the payload to parent component
   const createPayLoadToSend = () =>{
-    console.log("create payload to send to user")
-    console.log(userDropDownValue)
     var date = new Date()
     let time = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? '0'  + date.getMinutes()  : date.getMinutes() )
     let strMsg = time + ' [' + userDropDownValue + '] : ' + msgToSend;
