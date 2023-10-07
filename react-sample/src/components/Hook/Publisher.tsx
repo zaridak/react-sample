@@ -1,30 +1,20 @@
-import { useContext } from 'react';
-import { QosOption } from './index'
+// import { useContext } from 'react';
+// import { QosOption } from './index'
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useState } from 'react'
+import { PayLoadMessageModel } from '../../models/payload-message-data-model'
 
-const Publisher = ({payloadFromPublisher, publish, sendMsgClicked,  usernames }) => {
+// const Publisher = ({payloadFromPublisher, publish, sendMsgClicked,  usernames }) => {
+const Publisher = ({publish, sendMsgClicked,  usernames }) => {
   
-  const qosOptions = useContext(QosOption);
-  // let recipients = [
-  //   {value: 'All', name: 'All' },
-  //   {value: {userConnected}, name: {userConnected}}
-  // ];
+  // const qosOptions = useContext(QosOption);
 
   const [userDropDownValue,setUserDropDownValue] = useState('All');
   const [msgToSend, setMsgToSend] = useState('');
   const [sendBtnDisable,setSendBtnDisable] = useState(true);
-
-
-  // topic, QoS for publishing message
-  const record = {
-    topic: 'testtopic/react',
-    qos: 0,
-  };
-
 
   function userSelectionChanged(event) {
     setUserDropDownValue(event.target.value)
@@ -46,19 +36,26 @@ const Publisher = ({payloadFromPublisher, publish, sendMsgClicked,  usernames })
     let time = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? '0'  + date.getMinutes()  : date.getMinutes() )
     let strMsg = time + ' [' + userDropDownValue + '] : ' + msgToSend;
     
+    const payloadModel:PayLoadMessageModel = {
+      date: time,
+      isPrivate: userDropDownValue == 'All' ? false : true,
+      message: msgToSend,
+      sender: userDropDownValue
+    }
+    let payloadModelJsonStr:string = JSON.stringify(payloadModel);
+    
     let jsonPayload ={
       "topic": userDropDownValue == 'All' ? 'topic/chatserver101/public' : 'topic/chatserver101/priv/'+userDropDownValue,
       "qos":0, // default received at most once : The packet is sent, and that's it. There is no validation about whether it has been received.
-      "payload":  strMsg,
-      "date":time //redundant
+      "payload": payloadModelJsonStr,// strMsg,
     }
     sendMsgClicked(jsonPayload);
   }
 
   // const dropDownDyn = pro
-  var userNamesFroDropDown = []
+  var userNamesFroDropDown:any[] = []
   userNamesFroDropDown.push({label:'All',value:'All'})
-  usernames.forEach(function(usern) {
+  usernames.forEach((usern:string)=>{
     userNamesFroDropDown.push({label:usern,value:usern})
   })
 
@@ -75,7 +72,7 @@ const Publisher = ({payloadFromPublisher, publish, sendMsgClicked,  usernames })
       <div className='col-sm-6'>
         <Form.Select onChange={userSelectionChanged} value ={userDropDownValue}>
           {
-            userNamesFroDropDown.map( opt =>(
+            userNamesFroDropDown.map( (opt:any) =>(
               <option key={opt.value} value={opt.value}>{opt.value}</option>
             ))
           }
