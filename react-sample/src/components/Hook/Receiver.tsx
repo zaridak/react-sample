@@ -11,7 +11,10 @@ const Receiver = ({ payload }) => {
 
   useEffect(() => {
     if (payload.topic) {
-      console.log('Receiver useEffect')      
+      console.log('Receiver useEffect')
+      if(messages && messages.length > 999){
+        messages.shift(); // display only the last 1000 messages O(n) operation 
+      }
       setMessages(messages => [...messages, payload])
     }
   }, [payload])
