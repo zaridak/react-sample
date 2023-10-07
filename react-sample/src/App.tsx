@@ -23,8 +23,8 @@ function App() {
       clientId: connectionDetailsInput.clientId != null && connectionDetailsInput.clientId != undefined ? connectionDetailsInput.clientId : 'client_' + Math.random().toString(16).substring(2, 8),
     }
     //todo delete
-    // inputData.host= 'broker.emqx.io'
-    // inputData.port = '8083'
+    inputData.host= 'broker.emqx.io'
+    inputData.port = '8083'
     setConnectionData(inputData);
     setConnectPressed(true)
   }

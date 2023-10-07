@@ -133,7 +133,6 @@ const HookMqtt = (connectionDataDetails) => {
           return
         }
         console.log(` Subscribe to topics: ${topic}`)
-        setIsSub(true)
       })
     }
   }
@@ -149,7 +148,6 @@ const HookMqtt = (connectionDataDetails) => {
           return
         }
         console.log(`unsubscribed topic: ${topic}`)
-        setIsSub(false)
       })
     }
   }

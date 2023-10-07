@@ -76,7 +76,7 @@ const Publisher = ({payloadFromPublisher, publish, sendMsgClicked,  usernames })
         <Form.Select onChange={userSelectionChanged} value ={userDropDownValue}>
           {
             userNamesFroDropDown.map( opt =>(
-              <option value={opt.value}>{opt.value}</option>
+              <option key={opt.value} value={opt.value}>{opt.value}</option>
             ))
           }
         </Form.Select>

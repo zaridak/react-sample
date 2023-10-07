@@ -3,8 +3,8 @@ import { QosOption } from './index'
 
 
 const Subscriber = ({ sub, unSub, showUnsub,userName }) => {
-  // const [form] = Form.useForm()
-  const qosOptions = useContext(QosOption)
+
+  //const qosOptions = useContext(QosOption)
 
   const userNamesUnique = userName;
   // create topic as many as the userNames
@@ -15,11 +15,6 @@ const Subscriber = ({ sub, unSub, showUnsub,userName }) => {
    const recordPublic = {
     topic: 'topic/chatserver101/public',
     qos: 1, // auto unsubscribe after the user disconnects
-  }
-
-  const recordPrivate = {
-    topic: 'topic/chatserver101/priv/'+userName,
-    qos: 1 // auto unsubscribe after the user disconnects
   }
 
   function handleSub(){
@@ -33,11 +28,11 @@ const Subscriber = ({ sub, unSub, showUnsub,userName }) => {
         })
       }
     })
-    // if(!showUnsub){
-      return (
-        topicsArray.map(topic =>sub(topic))
-      )
-    // }
+
+    return (
+      topicsArray.map(topic =>sub(topic))
+    )
+
   }
 
   return (
